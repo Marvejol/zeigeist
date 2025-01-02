@@ -5,7 +5,7 @@ function submitPost() {
   const newPost = postInput.value.trim();
   
   if (newPost) {
-    fetch('https://<your-vercel-app>.vercel.app/api/posts', { // Modifica con il tuo dominio di Vercel
+    fetch('https://zeigeist.vercel.app/api/posts/api/posts', { // Modifica con il tuo dominio di Vercel
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -23,7 +23,7 @@ function submitPost() {
 }
 
 function fetchPosts() {
-  fetch('https://zeigeist.vercel.app//api/posts') // Modifica con il tuo dominio di Vercel
+  fetch('https://zeigeist.vercel.app/api/posts') // Modifica con il tuo dominio di Vercel
     .then((response) => response.json())
     .then((data) => {
       const feed = document.getElementById('feed');
