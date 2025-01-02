@@ -23,7 +23,7 @@ function submitPost() {
 }
 
 function fetchPosts() {
-  fetch('https://<your-vercel-app>.vercel.app/api/posts') // Modifica con il tuo dominio di Vercel
+  fetch('https://zeigeist.vercel.app//api/posts') // Modifica con il tuo dominio di Vercel
     .then((response) => response.json())
     .then((data) => {
       const feed = document.getElementById('feed');
