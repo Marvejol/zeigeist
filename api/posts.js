@@ -1,12 +1,14 @@
 import { Client } from 'pg';
 
-const client = new Client({
-  connectionString: 'postgresql://postgres:2!etLCrp.eHwwHt@db.ovzrzmfunfpwljieqkrj.supabase.co:5432/postgres', // Sostituisci con la stringa corretta
-});
-
 async function handler(req, res) {
+  // Configura il client PostgreSQL
+  const client = new Client({
+    connectionString: 'postgresql://postgres:2!etLCrp.eHwwHt@db.ovzrzmfunfpwljieqkrj.supabase.co:5432/postgres', // Stringa di connessione corretta
+  });
+
   try {
     await client.connect();
+
     if (req.method === 'GET') {
       const result = await client.query('SELECT * FROM posts');
       res.status(200).json(result.rows);
@@ -22,7 +24,7 @@ async function handler(req, res) {
     console.error('Server error:', err.message);
     res.status(500).json({ error: 'A server error occurred', details: err.message });
   } finally {
-    await client.end();
+    await client.end(); // Chiudi la connessione al termine di ogni richiesta
   }
 }
 
