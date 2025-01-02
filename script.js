@@ -5,7 +5,7 @@ function submitPost() {
     const newPost = postInput.value.trim();
     
     if (newPost) {
-      fetch('http://localhost:8080/api/posts', {
+      fetch('/api/posts', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -23,7 +23,7 @@ function submitPost() {
   }
 
 function fetchPosts() {
-    fetch('http://localhost:8080/api/posts')
+    fetch('/api/posts')
       .then((response) => response.json())
       .then((data) => {
         const feed = document.getElementById('feed');
