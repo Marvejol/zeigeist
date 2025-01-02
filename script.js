@@ -5,7 +5,7 @@ function submitPost() {
   const newPost = postInput.value.trim();
   
   if (newPost) {
-    fetch('https://zeigeist.vercel.app/api/posts/api/posts', { // Modifica con il tuo dominio di Vercel
+    fetch('https://zeigeist.vercel.app/api/posts', {  // Correct endpoint here
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -15,15 +15,15 @@ function submitPost() {
     .then(response => response.json())
     .then(data => {
       console.log(data.message);
-      fetchPosts(); // Ricarica i post dopo aver inviato uno nuovo
+      fetchPosts(); // Reload posts after submission
     })
     .catch(err => console.error('Error submitting post:', err));
   }
-  postInput.value = ''; // Azzera l'input dopo l'invio
+  postInput.value = ''; // Clear input after submitting
 }
 
 function fetchPosts() {
-  fetch('https://zeigeist.vercel.app/api/posts') // Modifica con il tuo dominio di Vercel
+  fetch('https://zeigeist.vercel.app/api/posts')  // Correct endpoint here
     .then((response) => response.json())
     .then((data) => {
       const feed = document.getElementById('feed');
@@ -38,5 +38,5 @@ function fetchPosts() {
     .catch((err) => console.error('Error fetching posts:', err));
 }
 
-// Carica i post quando la pagina viene caricata
+// Load posts when the page loads
 window.onload = fetchPosts;
