@@ -18,3 +18,23 @@ async function fetchPosts() {
 
 // Call the function to fetch posts
 fetchPosts();
+
+function submitPost() {
+  const postContent = document.getElementById('postInput').value;
+  fetch('/api/posts', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ post: postContent })
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log(data);
+    // Handle success (e.g., show a success message or update UI)
+  })
+  .catch(error => {
+    console.error('Error:', error);
+    // Handle error
+  });
+}
