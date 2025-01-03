@@ -1,40 +1,51 @@
 async function fetchPosts() {
   try {
-    const response = await fetch('/api/posts');  // Make GET request to the posts API
-    const data = await response.json();
+      const response = await fetch('/api/posts');
+      const data = await response.json();
 
-    if (response.ok) {
-      // If the request is successful, loop through posts and display
-      data.posts.forEach(post => {
-        console.log(post.post); // Assuming each post has a 'post' field
+      if (!Array.isArray(data)) {
+          console.error("Unexpected data format:", data);
+          return;
+      }
+
+      const postContainer = document.getElementById('post-container');
+      postContainer.innerHTML = ''; // Clear the container
+
+      const lastFivePosts = data.slice(-5).reverse(); // Get the last 5 posts
+      lastFivePosts.forEach(post => {
+          const postDiv = document.createElement('div');
+          postDiv.textContent = post.post;
+          postContainer.appendChild(postDiv);
       });
-    } else {
-      console.error('Error fetching posts:', data.error || 'Unknown error');
-    }
   } catch (error) {
-    console.error('Error fetching posts:', error.message);
+      console.error("Error fetching posts:", error);
   }
 }
 
-// Call the function to fetch posts
-fetchPosts();
+async function submitPost() {
+  const postContent = document.getElementById('post-input').value;
+  if (!postContent) {
+      alert("Post content cannot be empty!");
+      return;
+  }
 
-function submitPost() {
-  const postContent = document.getElementById('postInput').value;
-  fetch('/api/posts', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ post: postContent })
-  })
-  .then(response => response.json())
-  .then(data => {
-    console.log(data);
-    // Handle success (e.g., show a success message or update UI)
-  })
-  .catch(error => {
-    console.error('Error:', error);
-    // Handle error
-  });
+  try {
+      const response = await fetch('/api/posts', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ post: postContent })
+      });
+
+      if (response.ok) {
+          document.getElementById('post-input').value = ''; // Clear input
+          fetchPosts(); // Refresh posts
+      } else {
+          const error = await response.json();
+          console.error("Error adding post:", error);
+      }
+  } catch (error) {
+      console.error("Error submitting post:", error);
+  }
 }
+
+document.addEventListener('DOMContentLoaded', fetchPosts);
