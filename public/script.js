@@ -1,42 +1,20 @@
-// Funzione per inviare un nuovo post
-function submitPost() {
-  const postInput = document.getElementById('postInput');
-  const newPost = postInput.value.trim();
+async function fetchPosts() {
+  try {
+    const response = await fetch('/api/posts');  // Make GET request to the posts API
+    const data = await response.json();
 
-  if (newPost) {
-    fetch('/api/posts', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ post: newPost }),
-    })
-      .then(response => response.json())
-      .then(data => {
-        console.log(data.message);
-        fetchPosts();  // Ricarica i post dopo averne aggiunto uno
-      })
-      .catch(err => console.error('Error submitting post:', err));
-  }
-  postInput.value = '';  // Pulisce il campo di input
-}
-
-// Funzione per recuperare i post esistenti
-function fetchPosts() {
-  fetch('/api/posts')
-    .then(response => response.json())
-    .then(data => {
-      const feed = document.getElementById('feed');
-      feed.innerHTML = '';  // Pulisce il contenuto esistente
-      data.forEach((post) => {
-        const postElement = document.createElement('div');
-        postElement.classList.add('post');
-        postElement.textContent = post.post;
-        feed.appendChild(postElement);
+    if (response.ok) {
+      // If the request is successful, loop through posts and display
+      data.posts.forEach(post => {
+        console.log(post.post); // Assuming each post has a 'post' field
       });
-    })
-    .catch((err) => console.error('Error fetching posts:', err));
+    } else {
+      console.error('Error fetching posts:', data.error || 'Unknown error');
+    }
+  } catch (error) {
+    console.error('Error fetching posts:', error.message);
+  }
 }
 
-// Carica i post quando la pagina viene caricata
-window.onload = fetchPosts;
+// Call the function to fetch posts
+fetchPosts();
