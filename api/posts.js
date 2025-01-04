@@ -20,7 +20,7 @@ async function anonymizePost(content) {
   ---
   ${content}
   ---
-  Output the anonymized and concise version only.`;
+  Output the anonymized and concise version ONLY.`;
 
   try {
     const response = await openai.createChatCompletion({
