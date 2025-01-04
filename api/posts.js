@@ -2,7 +2,7 @@ import { createClient } from '@supabase/supabase-js';
 import { Configuration, OpenAIApi } from 'openai';
 
 const supabaseUrl = 'https://ovzrzmfunfpwljieqkrj.supabase.co';
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im92enJ6bWZ1bmZwd2xqaWVxa3JqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzU4MzAyNDMsImV4cCI6MjA1MTQwNjI0M30.6xwb-GYkEO4hACs2V8myTU_icqDD-1XraCTdwdsVAWc'; // Use environment variable
+const supabaseKey = process.env.SUPABASE_KEY; // Use environment variable
 const openaiApiKey = process.env.OPENAI_API_KEY; // Use environment variable
 
 const supabase = createClient(supabaseUrl, supabaseKey);
@@ -13,14 +13,8 @@ const configuration = new Configuration({
 const openai = new OpenAIApi(configuration);
 
 async function anonymizePost(content) {
-  const prompt = `
-  You are an AI tasked with anonymizing sensitive information in a message. 
-  Replace any personal names, locations, or other identifiable information 
-  with generic terms. Keep the response concise (150-300 words). Here's the text:
-  ---
-  ${content}
-  ---
-  Output the anonymized and concise version ONLY.`;
+  const prompt = 
+"lol"
 
   try {
     const response = await openai.createChatCompletion({
