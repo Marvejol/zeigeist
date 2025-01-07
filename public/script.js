@@ -48,4 +48,6 @@ async function submitPost() {
   }
 }
 
+
+
 document.addEventListener('DOMContentLoaded', fetchPosts);
