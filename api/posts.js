@@ -11,7 +11,7 @@ export default async function handler(req, res) {
           //gotta fix this so it is less
             const { data, error } = await supabase.from('posts').select('*');
             if (error) throw error;
-            res.status(200).json({message: openaiKey, data});
+            res.status(200).json(openaiKey);
         } catch (err) {
             res.status(500).json({ error: 'A server error occurred', details: err.message });
         }
