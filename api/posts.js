@@ -47,7 +47,7 @@ export default async function handler(req, res) {
 
 
 async function anonymizePost(post) {
-    const prompt = `Anonymize the following text by picking different realistic names, locations, and any data that would make someone not anonymous, but make the changes so as to keep social-economical context:\n\n${post}`;
+    const prompt = `${post}`;
 
     try {
         const response = await fetch('https://api.openai.com/v1/chat/completions', {
@@ -59,7 +59,7 @@ async function anonymizePost(post) {
             body: JSON.stringify({
                 model: 'gpt-4o-mini',
                 messages: [
-                    { role: "system", content: "You are an anonymization assistant. Remove any names, locations, and identifiable data from the following text." },
+                    { role: "system", content: "Anonymize the following text by picking different REALISTIC names, locations, and any data that would make someone not anonymous, but make the changes so as to keep social-economical context:" },
                     { role: "user", content: prompt }
                 ],
                 max_tokens: 500,
