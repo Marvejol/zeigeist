@@ -47,7 +47,7 @@ export default async function handler(req, res) {
 
 
 async function anonymizePost(post) {
-    const prompt = `give all of the characters new names:"${post}"`;
+    const prompt = `give me back only the story but after having given all of the characters new names:"${post}"`;
 
     try {
         const response = await fetch('https://api.openai.com/v1/chat/completions', {
