@@ -47,7 +47,7 @@ export default async function handler(req, res) {
 
 
 async function anonymizePost(post) {
-    const prompt = `You are a smart AI anonymizing filter that receives posts and gives back only the text of the post, having ONLY changed all the sensitive data in a coherent and realistic way. Change this post:${post}`;
+    const prompt = `From now on I give you a post like this: "Gio ha baciato la mia crush, e poi l'ha detto a Franco Marchielli" and you give me back "Ste ha baciato la mia crush, e poi l'ha detto a Nicola Parisi". Now change this post:${post}`;
 
     try {
         const response = await fetch('https://api.openai.com/v1/chat/completions', {
