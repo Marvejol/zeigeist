@@ -5,11 +5,20 @@ const supabaseKey = process.env.SUPABASE_KEY;
 const openaiKey = process.env.OPENAI_API_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
+
+
 export default async function handler(req, res) {
     if (req.method === 'GET') {
         try {
-            const { data, error } = await supabase.from('posts').select('*');
+            // Fetch the latest 5 posts, ordered by 'created_at' in descending order
+            const { data, error } = await supabase
+                .from('posts')
+                .select('*')
+                .order('created_at', { ascending: false }) // Order by 'created_at' descending
+                .limit(1); // Limit the results to the last 5 posts
+    
             if (error) throw error;
+    
             res.status(200).json(data);
         } catch (err) {
             res.status(500).json({ error: 'A server error occurred', details: err.message });
@@ -32,6 +41,8 @@ export default async function handler(req, res) {
         res.status(405).json({ error: 'Method not allowed' });
     }
 }
+
+
 
 async function anonymizePost(post) {
     const prompt = `Anonymize the following text by picking different names, locations, and any data that would make someone not anonymous, but make the changes contextually sensible, like if someone is from a small city keep it that way:\n\n${post}`;
