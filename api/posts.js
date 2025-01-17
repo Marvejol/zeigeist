@@ -34,7 +34,7 @@ export default async function handler(req, res) {
 }
 
 async function anonymizePost(post) {
-    const prompt = `Anonymize the following text by removing names, locations, and any identifiable data:\n\n${post}`;
+    const prompt = `Anonymize the following text by changing names, locations, and any data that would make someone not anonymous, apart from age and sex:\n\n${post}`;
 
     try {
         const response = await fetch('https://api.openai.com/v1/chat/completions', {
