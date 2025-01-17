@@ -12,8 +12,8 @@ async function fetchPosts() {
       }
 
       posts = data; // Store all posts
-      currentPostIndex = 0; // Reset index
-      displayPost(currentPostIndex);
+      currentPostIndex = 0; // Start from the first post
+      displayPost(currentPostIndex); // Display the first post
   } catch (error) {
       console.error("Error fetching posts:", error);
   }
@@ -23,16 +23,20 @@ function displayPost(index) {
   const postContainer = document.getElementById('post-container');
   postContainer.innerHTML = ''; // Clear the container
 
-  if (posts[index]) {
+  if (posts.length > 0 && posts[index]) {
       const postDiv = document.createElement('div');
       postDiv.textContent = posts[index].post; // Assuming each post object has a 'post' property
       postContainer.appendChild(postDiv);
+  } else {
+      postContainer.textContent = "No posts available";
   }
 }
 
 document.getElementById('next-post-button').addEventListener('click', () => {
-  currentPostIndex = (currentPostIndex + 1) % posts.length; // Loop back to start
-  displayPost(currentPostIndex);
+  if (posts.length > 0) {
+      currentPostIndex = (currentPostIndex + 1) % posts.length; // Loop back to start if at the end
+      displayPost(currentPostIndex); // Display the next post
+  }
 });
 
 async function submitPost() {
