@@ -47,7 +47,7 @@ export default async function handler(req, res) {
 
 
 async function anonymizePost(post) {
-    const prompt = `From now on I give you a post like this: "Gio ha baciato la mia crush, e poi l'ha detto a Franco Marchielli" and you give me back "Ste ha baciato la mia crush, e poi l'ha detto a Nicola Parisi". Now change this post:${post}`;
+    const prompt = `Make this post completely UNDOXXABLE, keep the rest exactly the same:"${post}"`;
 
     try {
         const response = await fetch('https://api.openai.com/v1/chat/completions', {
@@ -62,7 +62,7 @@ async function anonymizePost(post) {
                     { role: "user", content: prompt }
                 ],
                 max_tokens: 500,
-                temperature: 0.7
+                temperature: 0.6
             })
         });
 
