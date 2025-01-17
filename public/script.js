@@ -1,9 +1,10 @@
-let currentPostIndex = 0;
-let posts = [];
+let currentPostIndex = 0; // Index for the current post being displayed
+let posts = []; // Store the current batch of posts
+let offset = 0; // Offset to fetch the next batch
 
 async function fetchPosts() {
   try {
-      const response = await fetch('/api/posts');
+      const response = await fetch(`/api/posts?offset=${offset}`);
       const data = await response.json();
 
       if (!Array.isArray(data)) {
@@ -11,9 +12,14 @@ async function fetchPosts() {
           return;
       }
 
-      posts = data; // Store all posts
-      currentPostIndex = 0; // Start from the first post
-      displayPost(currentPostIndex); // Display the first post
+      if (data.length === 0) {
+          console.log("No more posts available.");
+          return; // No more posts to load
+      }
+
+      posts = data; // Store the new batch of posts
+      currentPostIndex = 0; // Reset to the first post in the batch
+      displayPost(currentPostIndex); // Display the first post of the batch
   } catch (error) {
       console.error("Error fetching posts:", error);
   }
@@ -33,9 +39,13 @@ function displayPost(index) {
 }
 
 document.getElementById('next-post-button').addEventListener('click', () => {
-  if (posts.length > 0) {
-      currentPostIndex = (currentPostIndex + 1) % posts.length; // Loop back to start if at the end
+  if (currentPostIndex < posts.length - 1) {
+      currentPostIndex += 1; // Show the next post in the current batch
       displayPost(currentPostIndex); // Display the next post
+  } else {
+      // If all posts in the current batch are shown, load the next batch
+      offset += 10; // Move to the next batch
+      fetchPosts(); // Fetch the next batch of posts
   }
 });
 

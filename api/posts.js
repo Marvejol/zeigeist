@@ -10,16 +10,18 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 export default async function handler(req, res) {
     if (req.method === 'GET') {
         try {
-            // Fetch the latest 5 posts, ordered by 'created_at' in descending order
+            const limit = 10; // Number of posts per batch
+            const offset = req.query.offset || 0; // Offset for pagination (defaults to 0)
+    
             const { data, error } = await supabase
                 .from('posts')
                 .select('*')
-                .order('created_at', { ascending: false }) // Order by 'created_at' descending
-                .limit(1); // Limit the results to the last 5 posts
+                .order('created_at', { ascending: false }) // Order by creation date
+                .range(offset, offset + limit - 1); // Fetch a specific range of posts
     
             if (error) throw error;
     
-            res.status(200).json(data);
+            res.status(200).json(data); // Return the current batch of posts
         } catch (err) {
             res.status(500).json({ error: 'A server error occurred', details: err.message });
         }
