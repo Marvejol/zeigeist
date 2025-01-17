@@ -47,7 +47,7 @@ export default async function handler(req, res) {
 
 
 async function anonymizePost(post) {
-    const prompt = `Make this post completely UNDOXXABLE, keep the rest exactly the same:"${post}"`;
+    const prompt = `give all of the characters new names:"${post}"`;
 
     try {
         const response = await fetch('https://api.openai.com/v1/chat/completions', {
