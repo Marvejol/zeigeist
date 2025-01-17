@@ -2,7 +2,7 @@ import { createClient } from '@supabase/supabase-js';
 
 const supabaseUrl = 'https://ovzrzmfunfpwljieqkrj.supabase.co';
 const supabaseKey = process.env.SUPABASE_KEY;
-const openaiKey = process.env.OPENAI_KEY;
+const openaiKey = process.env.OPENAI_API_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 export default async function handler(req, res) {
