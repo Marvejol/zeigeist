@@ -8,11 +8,9 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 export default async function handler(req, res) {
     if (req.method === 'GET') {
         try {
-          //gotta fix this so it is less
             const { data, error } = await supabase.from('posts').select('*');
             if (error) throw error;
             res.status(200).json(data);
-            console.log(openaiKey);
         } catch (err) {
             res.status(500).json({ error: 'A server error occurred', details: err.message });
         }
@@ -21,7 +19,10 @@ export default async function handler(req, res) {
             const { post } = req.body;
             if (!post) throw new Error('Post content is missing');
 
-            const { data, error } = await supabase.from('posts').insert([{ post }]);
+            // Anonymize the post using OpenAI
+            const anonymizedPost = await anonymizePost(post);
+            
+            const { data, error } = await supabase.from('posts').insert([{ post: anonymizedPost }]);
             if (error) throw error;
             res.status(200).json({ message: 'Post added', data });
         } catch (err) {
@@ -29,5 +30,34 @@ export default async function handler(req, res) {
         }
     } else {
         res.status(405).json({ error: 'Method not allowed' });
+    }
+}
+
+async function anonymizePost(post) {
+    const prompt = `Anonymize the following text by removing names, locations, and any identifiable data:\n\n${post}`;
+
+    try {
+        const response = await fetch('https://api.openai.com/v1/chat/completions', {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${openaiKey}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                model: 'gpt-4o-mini',
+                messages: [
+                    { role: "system", content: "You are an anonymization assistant. Remove any names, locations, and identifiable data from the following text." },
+                    { role: "user", content: prompt }
+                ],
+                max_tokens: 500,
+                temperature: 0.3
+            })
+        });
+
+        const data = await response.json();
+        return data.choices[0].message.content.trim();
+    } catch (error) {
+        console.error('Error anonymizing post:', error);
+        return post; // Return original post in case of error
     }
 }
