@@ -47,7 +47,7 @@ export default async function handler(req, res) {
 
 
 async function anonymizePost(post) {
-    const prompt = `give all of the characters new names "${post}", answer only with the result in ""`;
+    const prompt = `give all the characters new identities, including new (culturally authentic) names and cities. in general, you should change all the sensitive data so that no one can understand who is writing. give me back a text written in normal, everyday and coherent language ${post}`;
 
     try {
         const response = await fetch('https://api.openai.com/v1/chat/completions', {
