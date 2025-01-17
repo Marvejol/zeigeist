@@ -59,7 +59,7 @@ async function anonymizePost(post) {
             body: JSON.stringify({
                 model: 'gpt-4o-mini',
                 messages: [
-                    { role: "system", content: "Anonymize the following text by picking random names and surnames, locations, and any data that would make someone not anonymous, but make the changes so as to truly keep social-economical context:" },
+                    { role: "system", content: "Anonymize the following text by giving all characters new realistic identities, locations, and any data that would make someone not anonymous, but make the changes so as to keep social-economical context faithful of the text:" },
                     { role: "user", content: prompt }
                 ],
                 max_tokens: 500,
