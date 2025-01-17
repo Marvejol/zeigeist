@@ -47,7 +47,7 @@ export default async function handler(req, res) {
 
 
 async function anonymizePost(post) {
-    const prompt = `give me back the exact post, with only the names changed with a random ass name, keep it coherent throughout: "${post}"`;
+    const prompt = `give me back the exact post, but give each person another name from a pool of random names, and keep it coherent throughout: "${post}"`;
 
     try {
         const response = await fetch('https://api.openai.com/v1/chat/completions', {
