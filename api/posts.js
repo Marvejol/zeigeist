@@ -63,7 +63,7 @@ async function anonymizePost(post) {
                     { role: "user", content: prompt }
                 ],
                 max_tokens: 500,
-                temperature: 0.3
+                temperature: 0.7
             })
         });
 
