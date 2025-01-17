@@ -55,7 +55,14 @@ async function anonymizePost(post) {
         });
 
         const data = await response.json();
-        return data.choices[0].message.content.trim();
+
+        // Check if the response contains the expected structure
+        if (data && data.choices && data.choices.length > 0 && data.choices[0].message) {
+            return data.choices[0].message.content.trim();
+        } else {
+            console.error('Unexpected API response structure:', data);
+            throw new Error('Invalid API response structure');
+        }
     } catch (error) {
         console.error('Error anonymizing post:', error);
         return post; // Return original post in case of error
