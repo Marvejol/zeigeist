@@ -47,7 +47,7 @@ export default async function handler(req, res) {
 
 
 async function anonymizePost(post) {
-    const prompt = `In this post: "${post}", think up some random girl and boys names, make it a healthy mix, then use them to rewrite the post, only changing the original names with the ones you came up with, keeping them coherent`;
+    const prompt = `Give me back this post: ${post} but change the names like the CIA would do`;
 
     try {
         const response = await fetch('https://api.openai.com/v1/chat/completions', {
