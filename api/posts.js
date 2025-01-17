@@ -47,7 +47,7 @@ export default async function handler(req, res) {
 
 
 async function anonymizePost(post) {
-    const prompt = `Replace each person’s name in the post with a randomly selected, different name, ensuring a diverse and even distribution across many common names. Avoid reusing the same few names and ensure both male and female names are varied equally. here's the post:"${post}"`;
+    const prompt = `Replace each person’s name in the post with a different one, I need variety so make sure the replacements feel unique and not the same every time. Here's the post:"${post}"`;
 
     try {
         const response = await fetch('https://api.openai.com/v1/chat/completions', {
