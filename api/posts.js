@@ -47,7 +47,7 @@ export default async function handler(req, res) {
 
 
 async function anonymizePost(post) {
-    const prompt = `give me back the exact post, with only the names changed coherently throughout: "${post}"`;
+    const prompt = `give me back the exact post, with only the names changed creatively and coherently throughout: "${post}"`;
 
     try {
         const response = await fetch('https://api.openai.com/v1/chat/completions', {
