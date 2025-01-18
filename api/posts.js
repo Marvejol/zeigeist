@@ -47,7 +47,7 @@ export default async function handler(req, res) {
 
 
 async function anonymizePost(post) {
-    const prompt = `Give me back only the post with names changed with names that are between the fifth and the 25th most common names of that languagge, and then keep the coherence. Here is the post : ${post}`;
+    const prompt = `Change the names in this post.This is the post: "${post}". Then change them again 3 times, then answer only with the result.`;
 
     try {
         const response = await fetch('https://api.openai.com/v1/chat/completions', {
