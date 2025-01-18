@@ -47,7 +47,7 @@ export default async function handler(req, res) {
 
 
 async function anonymizePost(post) {
-    const prompt = `Change the names in this post.This is the post: "${post}". Then change them again 3 times, then give me back only the last attempt.`;
+    const prompt = `Change the names in this post, coherently. I need a lot of variety in the names, otherwise it is useless, here is the post:"${post}"`;
 
     try {
         const response = await fetch('https://api.openai.com/v1/chat/completions', {
