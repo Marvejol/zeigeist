@@ -47,7 +47,7 @@ export default async function handler(req, res) {
 
 
 async function anonymizePost(post) {
-    const prompt = `Please replace any names in the text with random, uncommon names from that country to ensure privacy while maintaining the context: ${post}`;
+    const prompt = `Please replace any names, for both women and men, in the text with random, uncommon modern names from that country to ensure privacy while maintaining the context: ${post}`;
 
     try {
         const response = await fetch('https://api.openai.com/v1/chat/completions', {
